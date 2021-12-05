@@ -6,4 +6,4 @@ data class MovieResponse (
     override var code: Int,
     override var message: String,
     val movie: Movie,
-) : Response()
+) : Response(code, message)

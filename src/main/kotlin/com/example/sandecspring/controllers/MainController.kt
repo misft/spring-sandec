@@ -2,6 +2,7 @@ package com.example.sandecspring.controllers
 
 import com.example.sandecspring.data.responses.ListMovieResponse
 import com.example.sandecspring.data.responses.MovieResponse
+import com.example.sandecspring.data.responses.Response
 import com.example.sandecspring.models.Movie
 import com.example.sandecspring.repositories.MovieRepository
 import org.springframework.beans.factory.annotation.Autowired
@@ -30,8 +31,14 @@ class MainController(
 
     @GetMapping("/find")
     @ResponseBody
-    fun find(@RequestParam("id") id: Long): MovieResponse {
-        val movie = movieRepository.findById(id).get()
+    fun find(@RequestParam("id") id: Long): Response {
+        var movie: Movie? = null
+
+        try {
+            movie = movieRepository.findById(id).get()
+        } catch (e: Exception) {
+            return Response(200, "Data  Kosong")
+        }
 
         return MovieResponse(200, "Success", movie)
     }
